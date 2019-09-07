@@ -1,0 +1,82 @@
+$primaryColor: salmon;
+
+html{
+  background:sandybrown;
+  color: whitesmoke;
+}
+.App {
+  /* text-align: center; */
+  display: flex;
+}
+
+main{
+
+  background: #fa8072;
+  margin-top: 100px;
+  width: 100%;
+  border-radius: 100px 0 0 0;
+}
+nav{
+  width: 25%;
+  height: 100vh;
+}
+nav .wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wrapper{
+  width: 80%;
+  margin: 0 auto;
+}
+ul{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stockInformation{
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-left: 100px;
+}
+
+.stockInformation li{
+  display: flex;
+}
+
+
+
+
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
