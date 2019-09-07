@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import StockChart from './StockChart'
-import SearchBar from './SearchBar'
 import axios from 'axios';
 import './App.scss';
 
@@ -12,58 +10,63 @@ class App extends Component {
     this.state = {
       stockQuote: [],
       autoFill: [],
-      userInput: "",
+      userInput: '',
     }
   }
 
-
   handleChange = (event) => {
+    event.preventDefault()
     const { name, value } = event.target;
     this.setState({
       [name]: value
     })
-    event.preventDefault()
+
   }
-
-
 
 
   handleAutofill = (event) => {
     event.preventDefault()
     let symbolting = this.state.userInput
 
-    axios({
-      method: 'GET',
-      url: 'https://www.alphavantage.co/query?/',
- 
-      params: {
-        function: 'SYMBOL_SEARCH',
-        keywords: symbolting,
-        apikey: "IUNM6E16UXNGR0X4",
+    if (symbolting !== ''){
+      axios({
+        method: 'GET',
+        url: 'https://www.alphavantage.co/query?/',
 
-      },
-    }).then(result => {
-      result = result.data["bestMatches"]
-
-      // for(let i=0; i< result.length; i++){
-      //   console.log(result[i]["1. symbol"])
-      // }
-      // result.map((value, index) => {
-      //     console.log(value["1. symbol"])
-      //   }
-      // )
-
-      
-      this.setState({
-        autoFill: result
+        params: {
+          function: 'SYMBOL_SEARCH',
+          keywords: symbolting,
+          apikey: "WPZV8PD9NGMXNUEF",
+        },
+      }).then(result => {
+        result = result.data["bestMatches"]
+        this.setState({
+          autoFill: result
+        })
       })
-      // console.log(result)
+    }else{
+      this.setState({
+        autoFill:[]
+      })
+    }
 
-    })
+    // axios({
+    //   method: 'GET',
+    //   url: 'https://www.alphavantage.co/query?/',
+
+    //   params: {
+    //     function: 'SYMBOL_SEARCH',
+    //     keywords: symbolting,
+    //     apikey: "IUNM6E16UXNGR0X4",
+    //   },
+    // }).then(result => {
+    //   result = result.data["bestMatches"]
+      
+    //   this.setState({
+    //     autoFill: result
+    //   })
+    // })
   }
-
-
-
 
 
   handleSubmit = (event) => {
@@ -71,44 +74,42 @@ class App extends Component {
 
     let symbol = this.state.userInput
 
-    // alert(symbol)
+    if (symbol !==''){
+      axios({
+        method: 'GET',
+        url: `https://www.alphavantage.co/query?/`,
+        dataResponse: 'json',
+        params: {
+          function: 'GLOBAL_QUOTE',
+          symbol: symbol,
+          apikey: "WPZV8PD9NGMXNUEF",
+          format: "json",
 
-    axios({
-      method: 'GET',
-      url: `https://www.alphavantage.co/query?/`,
-      dataResponse: 'json',
-      params: {
-        function: 'GLOBAL_QUOTE',
-        symbol: symbol,
-        apikey: "IUNM6E16UXNGR0X4",
-        format: "json",
+        },
+      }).then(res => {
+        //res all the information for the searched stock ticker
+        res = res.data['Global Quote'];
 
-      },
-    }).then(res => {
-      //res all the information for the searched stock ticker
-      res = res.data['Global Quote'];
-
-      this.setState({
-        
-        stockQuote: Object.entries(res)
+        this.setState({
+          stockQuote: Object.entries(res),
+          userInput: "",
+        })
+        console.log(Object.entries(res))
       })
-      console.log(Object.entries(res))
-    })
+
+    }else{
+      alert('please enter a company ticker')
+    }
   }
 
 
   handleFillTextbox = index =>{
 
-    // alert(index)
-
     let symbol = this.state.autoFill[index]["1. symbol"]
-
-    alert(symbol)
 
     this.setState({
       userInput: symbol,
       autoFill:[],
-      
     })
   }
 
@@ -121,8 +122,9 @@ class App extends Component {
         <nav>
           <div className="wrapper">
             <h1>Juno Capital</h1>
-            <form action="">
-              <input type="text" name="userInput" value={this.state.userInput} onChange={this.handleChange} onKeyUp={this.handleAutofill}></input>
+
+            <form autoComplete="off" action="">
+              <input type="text" name="userInput" onSubmit={this.handleSubmit} value={this.state.userInput} onChange={this.handleChange} onKeyUp={this.handleAutofill}></input>
                 <ul className="dropdownSearch">
                   {
                     this.state.autoFill.map((value, index) => {
@@ -131,7 +133,7 @@ class App extends Component {
                   }
                 </ul>
 
-              <input type="button" value="submit" onClick={this.handleSubmit}></input>
+              <input type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}></input>
             </form>
 
           </div>
@@ -144,7 +146,6 @@ class App extends Component {
               stockQuoteArray.map((value, index) => {
                 return <li key={index}><span>{value[1]}</span> </li>
               })
-              
             }
           </ul>
         </main>
