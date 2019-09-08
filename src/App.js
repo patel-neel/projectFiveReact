@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Line } from 'react-chartjs-2';
 import './App.scss';
 
 
@@ -11,8 +12,11 @@ class App extends Component {
       stockQuote: [],
       autoFill: [],
       userInput: '',
+      chartDates: [],
+      chartPrices: [],
     }
   }
+
 
   handleChange = (event) => {
     event.preventDefault()
@@ -20,9 +24,7 @@ class App extends Component {
     this.setState({
       [name]: value
     })
-
   }
-
 
   handleAutofill = (event) => {
     event.preventDefault()
@@ -32,7 +34,6 @@ class App extends Component {
       axios({
         method: 'GET',
         url: 'https://www.alphavantage.co/query?/',
-
         params: {
           function: 'SYMBOL_SEARCH',
           keywords: symbolting,
@@ -49,23 +50,16 @@ class App extends Component {
         autoFill:[]
       })
     }
+  }
 
-    // axios({
-    //   method: 'GET',
-    //   url: 'https://www.alphavantage.co/query?/',
+  handleFillTextbox = index => {
 
-    //   params: {
-    //     function: 'SYMBOL_SEARCH',
-    //     keywords: symbolting,
-    //     apikey: "IUNM6E16UXNGR0X4",
-    //   },
-    // }).then(result => {
-    //   result = result.data["bestMatches"]
-      
-    //   this.setState({
-    //     autoFill: result
-    //   })
-    // })
+    let symbol = this.state.autoFill[index]["1. symbol"]
+
+    this.setState({
+      userInput: symbol,
+      autoFill: [],
+    })
   }
 
 
@@ -95,6 +89,51 @@ class App extends Component {
           userInput: "",
         })
         console.log(Object.entries(res))
+
+
+        //INTRADAY DATA////////////////////////////
+
+        axios({
+          method: 'GET',
+          url: `https://www.alphavantage.co/query?/`,
+          dataResponse: 'json',
+          params: {
+            function: 'TIME_SERIES_INTRADAY',
+            symbol: symbol,
+            apikey: "WPZV8PD9NGMXNUEF",
+            interval: '5min',
+            format: "json",
+          },
+
+        }).then(result =>{
+          result = result.data["Time Series (5min)"];
+
+          let datesArray =  [];
+          let pricesArray = [];
+
+          for (let i in result){
+            datesArray.push(i);
+            pricesArray.push(result[i]["4. close"])
+          }
+
+          this.setState({
+            chartDates: datesArray,
+            chartPrices: pricesArray,
+          })
+          
+        })
+
+        axios({
+          method: 'GET',
+          url: `https://financialmodelingprep.com/api/v3/company/profile/${symbol}`,
+          dataResponse: 'json',
+        }).then(result=>{
+
+          result = result.data['profile'];
+
+          console.log(result)
+          console.log(symbol)
+        })
       })
 
     }else{
@@ -103,15 +142,6 @@ class App extends Component {
   }
 
 
-  handleFillTextbox = index =>{
-
-    let symbol = this.state.autoFill[index]["1. symbol"]
-
-    this.setState({
-      userInput: symbol,
-      autoFill:[],
-    })
-  }
 
   render() {
     let stockQuoteArray = this.state.stockQuote;
@@ -125,15 +155,14 @@ class App extends Component {
 
             <form autoComplete="off" action="">
               <input type="text" name="userInput" onSubmit={this.handleSubmit} value={this.state.userInput} onChange={this.handleChange} onKeyUp={this.handleAutofill}></input>
+              <input type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}></input>
                 <ul className="dropdownSearch">
                   {
                     this.state.autoFill.map((value, index) => {
-                      return <li key={index} onClick={() => this.handleFillTextbox(index)}> {value["1. symbol"]} </li>
+                      return <li key={index} onClick={() => this.handleFillTextbox(index)} onSubmit={this.handleSubmit}> {value["1. symbol"]} - {value["2. name"]}</li>
                     })
                   }
                 </ul>
-
-              <input type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}></input>
             </form>
 
           </div>
@@ -141,13 +170,31 @@ class App extends Component {
         
         
         <main>
-          <ul className="stockInformation">
-            {
-              stockQuoteArray.map((value, index) => {
-                return <li key={index}><span>{value[1]}</span> </li>
-              })
-            }
-          </ul>
+          <div className="companyNumbers">
+            <ul className="stockInformationPlaceHolders">
+              <li>Ticker: </li>
+              <li>Open: </li>
+              <li>High: </li>
+              <li>Low: </li>
+              <li>Price: </li>
+              <li>Volume: </li>
+              <li>Day: </li>
+              <li>Previous Close: </li>
+              <li>($)Change: </li>
+              <li>(%)Change: </li>
+            </ul>
+            <ul className="stockInformation">
+              {
+                stockQuoteArray.map((value, index) => {
+                  return <li key={index}><span>{value[1]}</span> </li>
+                })
+              }
+            </ul>
+          </div>
+
+          <div className="stockChart">
+
+          </div>
         </main>
 
       </div>
