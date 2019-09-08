@@ -1,84 +1,211 @@
-$primaryColor: salmon;
+@import url("https://fonts.googleapis.com/css?family=Play:700|Roboto+Mono:500&display=swap");
+@import url("https://kit.fontawesome.com/000cbe3da1.js");
+
+$primaryColor:#101010;
+$primaryFont: 'Roboto Mono', monospace;
+$secondaryFont: 'Play', sans-serif;
+$borderColor: white;
 
 html{
-  background:sandybrown;
+  background:$primaryColor;
   color: whitesmoke;
-}
-.App {
-  /* text-align: center; */
-  display: flex;
+  font-family: $primaryFont;
 }
 
-main{
-
-  background: #fa8072;
-  margin-top: 100px;
-  width: 100%;
-  border-radius: 100px 0 0 0;
-}
-nav{
-  width: 25%;
-  height: 100vh;
-}
-nav .wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.wrapper{
-  width: 80%;
-  margin: 0 auto;
-}
 ul{
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
+
+
+.App {
+  /* text-align: center; */
+  display: flex;
+}
+
+.wrapper{
+  width: 90%;
+  margin: 0 auto;
+}
+
+.title{
+  border-bottom: 1px solid $borderColor;
+  padding: 10% 10%;
+
+  h1{
+    width: 100%;
+    font-size: 3rem;
+    font-family: $secondaryFont;
+    margin: 0;
+    line-height: 80%;
+  }
+
+}
+
+main{
+  width: 100%;
+  background: black;
+
+}
+
+.banner{
+  height: 80px;
+  width: 100%;
+  background: black;
+  border-bottom: 2px solid $borderColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  li{
+    border: 1px solid $borderColor;
+    padding: 10px;
+  }
+  h4{
+    margin: 0;
+  }
+  p{
+    margin: 0;
+  }
+  .fa{
+    font-size: 1.6rem;
+  }
+}
+
+
+nav{
+  width: 35%;
+  height: 100vh;
+  border-right: 1px solid $borderColor;
+}
+nav .wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchAutofill{
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  
+}
+form{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.searchBar{
+  width: 85%;
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  width: 0;
+  font-size: 1.1rem;
+  font-family: $primaryFont;
+  height: 50px;
+  border: 0;
+  transition: 500s;
+}
+
+form:hover input {
+  width: 95%;
+  padding: 0 0 0 5%;
+  transition: 0.5s;
+}
+
+button {
+  width: 100%;
+  height: 50px;
+  background-color: #333;
+  color: #fff;
+  border: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 500s;
+  
+  .fa{
+    font-size: 1rem;
+  }
+}
+
+form:hover button{
+  width: 50px;
+  transition: 0.5s;
+}
+
+
+.dropdownSearch {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  background-color: #282c34;
+  width: 85%;
+  margin-top: 50px;
+
+  li{
+    
+    padding: 1% 0 0 5%;
+  }
+}
+
+///////////////////////////////////////////////
+
+.chartNumbersInfo{
+
+  h2{
+    width: 80%;
+
+    font-size: 3rem;
+    margin: 0;
+    padding: 1% 0;
+    border-bottom: 1px solid $borderColor;
+    transition: 0.5s;
+  }
+}
+
+.numbersGraph{
+  display: flex;
+  justify-content: space-between;
+}
+
+
 .stockInformation{
-  width: 30%;
   display: flex;
   flex-direction: column;
+  align-content: space-around;
 
 }
 
 .companyNumbers{
-  width: 30%;
   display: flex;
-  margin-top: 50px;
-  margin-left: 100px;
-}
-
-
-
-
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 30%;
+  font-size: 1.4rem;
+  li{
+    margin: 1% 0;
+    padding: 2% 0;
+    border-bottom: 1px solid $borderColor;
+  }
+
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
+
+
