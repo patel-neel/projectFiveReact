@@ -31,6 +31,15 @@ class App extends Component {
       chartDates: [],
       chartPrices: [],
 
+      exchange:'',
+      industry:'',
+      companyWebsite: '',
+      companyDescription: '',
+      ceo: '',
+      sector:'',
+      companyImage:'',
+
+
       chartData: {
         labels: [],
         datasets: [
@@ -290,7 +299,17 @@ class App extends Component {
           this.setState({
             companyTitle: result['companyName'],
             mainPercentChange: percentString,
+            exchange: result["exchange"],
+            industry: result["industry"],
+            companyWebsite: result["website"],
+            companyDescription: result["description"],
+            ceo: result["ceo"],
+            sector: result["sector"],
+            companyImage: result["image"],
+
           })
+
+          console.log(result);
 
           console.log(percentString)
           console.log(symbol)
@@ -392,7 +411,6 @@ class App extends Component {
 
 
           <div className="wrapper chartNumbersInfo">
-            
             <h2>{this.state.companyTitle} (<span style={{ color: this.state.mainPercentChange > 0 ? 'green' : 'red'}}>{this.state.mainPercentChange}%</span>) </h2>
 
             <div className="numbersGraph">
@@ -416,8 +434,6 @@ class App extends Component {
                 />
               </div>
             </div>
-  
-            
           </div>
         </main>
 
