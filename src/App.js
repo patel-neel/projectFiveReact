@@ -137,7 +137,7 @@ class App extends Component {
         this.state.chartData.datasets[0].data = pricesArray.reverse();
 
         this.setState({
-          // chartData: myChartData
+          // chartData: this.state.myChartData
           state: this.state,
         })
 
@@ -272,8 +272,7 @@ class App extends Component {
             pricesArray
           }
 
-          console.log(myChartData);
-
+          
           this.state.chartData.datasets[0].label = symbol;
           this.state.chartData.labels = datesArray.reverse();
           this.state.chartData.datasets[0].data = pricesArray.reverse();
@@ -310,6 +309,7 @@ class App extends Component {
           })
 
           console.log(result);
+          console.log(result["description"]);
 
           console.log(percentString)
           console.log(symbol)
@@ -349,6 +349,9 @@ class App extends Component {
             </ul>
           </div>
           <div className="stockPortfolio">
+            <ul>
+              
+            </ul>
           </div>
         </nav>
         
@@ -435,6 +438,19 @@ class App extends Component {
               </div>
             </div>
           </div>
+
+          <div className="aboutCompany">
+            <h4>Company CEO: {this.state.ceo}</h4>
+            <h4>Company URL: <a href={this.state.companyWebsite}>{this.state.companyWebsite}</a></h4>
+            <h4>Exchange: {this.state.exchange}</h4>
+            <h4>Industry: {this.state.industry}</h4>
+            <h4>Sector: {this.state.sector}</h4>
+            <h4>About {this.state.companyTitle}:</h4>
+            <p>{this.state.companyDescription}</p>
+
+
+          </div>
+
         </main>
 
       </div>
