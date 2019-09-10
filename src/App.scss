@@ -21,6 +21,7 @@ html{
   background:$primaryColor;
   color: whitesmoke;
   font-family: $primaryFont;
+
 }
 
 a{
@@ -260,6 +261,8 @@ form:hover button{
 
 .chartNumbersInfo{
 
+  overflow: hidden;
+
   h2{
     width: 90%;
     font-size: 2rem;
@@ -456,8 +459,6 @@ footer {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        // width: 100px;
-        // margin: 0 100px;
         padding: 10px;
         position: absolute;
         animation-name: activeList;
@@ -486,6 +487,7 @@ footer {
     }
     .a7{
       animation-delay: 10s;
+      display: none;
 
     }
     .a8{
