@@ -28,6 +28,7 @@ html{
   position: absolute;
   height: 100%;
   position: fixed;
+  z-index: 0;
 }
 
 a{
@@ -337,6 +338,7 @@ form:hover button{
     overflow-x: hidden; 
     overflow-x: auto; 
     text-align:justify; 
+    z-index: 100;
     // margin-right: 2%;
 
     img {
