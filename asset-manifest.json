@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/projectFiveReact/static/css/main.f80eb9e2.chunk.css",
+    "main.js": "/projectFiveReact/static/js/main.e4ad5bc4.chunk.js",
+    "main.js.map": "/projectFiveReact/static/js/main.e4ad5bc4.chunk.js.map",
+    "runtime~main.js": "/projectFiveReact/static/js/runtime~main.e978d71c.js",
+    "runtime~main.js.map": "/projectFiveReact/static/js/runtime~main.e978d71c.js.map",
+    "static/css/2.f925f819.chunk.css": "/projectFiveReact/static/css/2.f925f819.chunk.css",
+    "static/js/2.78c3a9ff.chunk.js": "/projectFiveReact/static/js/2.78c3a9ff.chunk.js",
+    "static/js/2.78c3a9ff.chunk.js.map": "/projectFiveReact/static/js/2.78c3a9ff.chunk.js.map",
+    "index.html": "/projectFiveReact/index.html",
+    "precache-manifest.005d75a783be2de220f6473cacc1e0d7.js": "/projectFiveReact/precache-manifest.005d75a783be2de220f6473cacc1e0d7.js",
+    "service-worker.js": "/projectFiveReact/service-worker.js",
+    "static/css/2.f925f819.chunk.css.map": "/projectFiveReact/static/css/2.f925f819.chunk.css.map",
+    "static/css/main.f80eb9e2.chunk.css.map": "/projectFiveReact/static/css/main.f80eb9e2.chunk.css.map",
+    "static/media/font-awesome.min.css": "/projectFiveReact/static/media/fontawesome-webfont.fee66e71.woff"
+  }
+}
