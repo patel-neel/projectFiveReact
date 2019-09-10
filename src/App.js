@@ -12,6 +12,9 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
+
+      topNews: [],
+
       activeCompanyOne: "",
       activeCompanyTwo: "",
       activeCompanyThree: "",
@@ -23,6 +26,8 @@ class App extends Component {
       activeCompanyNine: "",
       activeCompanyTen: "",
 
+      companyTicker:'',
+
       companyTitle:"Facebook Inc.",
       mainPercentChange: '0.00',
       stockQuote: [],
@@ -30,6 +35,8 @@ class App extends Component {
       userInput: '',
       chartDates: [],
       chartPrices: [],
+
+      userPortfolio:[],
 
       exchange:'',
       industry:'',
@@ -55,6 +62,23 @@ class App extends Component {
   }
 
   componentDidMount(){
+
+    axios({
+      method: "GET",
+      url: 'https://stocknewsapi.com/api/v1/category?section=general&items=5&token=f3rxhssyrsg70doigztgrkpzkmrp2pealzljbdsv',
+      dataResponse: 'json',
+    }).then(res => {
+      res = res.data["data"]
+
+      console.log(res);
+
+      this.setState({
+        topNews: res
+      })
+    })
+
+
+
     axios({
       method: 'GET',
       url: `https://financialmodelingprep.com/api/v3/stock/actives`,
@@ -77,6 +101,8 @@ class App extends Component {
         activeCompanyNine: activeArray[8],
         activeCompanyTen: activeArray[9],
       })
+
+
 
     })
     axios({
@@ -105,7 +131,7 @@ class App extends Component {
         dataResponse: 'json',
         params: {
           function: 'TIME_SERIES_INTRADAY',
-          symbol: 'FB',
+          symbol: 'GOOG',
           apikey: "WPZV8PD9NGMXNUEF",
           interval: '5min',
           format: "json",
@@ -132,7 +158,7 @@ class App extends Component {
           pricesArray
         }
 
-        this.state.chartData.datasets[0].label = 'FB';
+        this.state.chartData.datasets[0].label = 'GOOG';
         this.state.chartData.labels = datesArray.reverse();
         this.state.chartData.datasets[0].data = pricesArray.reverse();
 
@@ -146,7 +172,7 @@ class App extends Component {
 
       axios({
         method: 'GET',
-        url: `https://financialmodelingprep.com/api/v3/company/profile/FB`,
+        url: `https://financialmodelingprep.com/api/v3/company/profile/GOOG`,
         dataResponse: 'json',
       }).then(result => {
 
@@ -187,6 +213,8 @@ class App extends Component {
         },
       }).then(result => {
         result = result.data["bestMatches"]
+
+
         this.setState({
           autoFill: result
         })
@@ -229,9 +257,12 @@ class App extends Component {
         //res all the information for the searched stock ticker
         res = res.data['Global Quote'];
 
+        let justTheTicker = res['01. symbol'];
+
         this.setState({
           stockQuote: Object.entries(res),
           userInput: "",
+          companyTicker: justTheTicker,
         })
         console.log(Object.entries(res))
 
@@ -291,25 +322,28 @@ class App extends Component {
           dataResponse: 'json',
         }).then(result=>{
 
-          result = result.data['profile'];
+          res = result.data['profile'];
 
-          let percentString = result['changesPercentage'].replace(/[!@#$%^&*()]/g, "");
+          let companySymbol = result.data['symbol']
+
+          let percentString = res['changesPercentage'].replace(/[!@#$%^&*()]/g, "");
 
           this.setState({
-            companyTitle: result['companyName'],
+            companyTitle: res['companyName'],
             mainPercentChange: percentString,
-            exchange: result["exchange"],
-            industry: result["industry"],
-            companyWebsite: result["website"],
-            companyDescription: result["description"],
-            ceo: result["ceo"],
-            sector: result["sector"],
-            companyImage: result["image"],
+            exchange: res["exchange"],
+            industry: res["industry"],
+            companyWebsite: res["website"],
+            companyDescription: res["description"],
+            ceo: res["ceo"],
+            sector: res["sector"],
+            companyImage: res["image"],
+            companyTicker: companySymbol,
 
           })
 
-          console.log(result);
-          console.log(result["description"]);
+          console.log(companySymbol);
+          // console.log(result["description"]);
 
           console.log(percentString)
           console.log(symbol)
@@ -322,7 +356,57 @@ class App extends Component {
   }
 
 
+
+
+
+
+  // handleAddPortfolio(event){
+  //   event.preventDefault();
+    
+  //   alert(this.state.ceo)
+
+
+    // axios({
+    //   method: 'GET',
+    //   url: `https://financialmodelingprep.com/api/v3/company/profile/${symbol}`,
+    //   dataResponse: 'json',
+    // }).then(res=>{
+    //   res=res.data
+
+    //   console.log(res)
+
+    // })
+    
+  // }
+
+
   render() {
+
+    let handleAddPortfolio=(event)=>{
+      event.preventDefault();
+
+      let companySymbol = this.state.companyTicker
+
+      axios({
+        method: 'GET',
+        url: `https://financialmodelingprep.com/api/v3/company/profile/${companySymbol}`,
+        dataResponse: 'json',
+      }).then(res=>{
+        res=res.data["profile"]
+
+        let portfolioObject = res
+
+        this.setState({
+          userPortfolio: [portfolioObject],
+        })
+
+
+        console.log(portfolioObject)
+
+      })
+
+      
+    }
 
     return (
       <div className="App">
@@ -332,12 +416,11 @@ class App extends Component {
             <h1>Finance</h1>
           </div>
 
-
           <div className="searchAutofill">
             <form autoComplete="off" action="">
               <div className="searchBar">
                 <input type="text" name="userInput" onSubmit={this.handleSubmit} value={this.state.userInput} onChange={this.handleChange} onKeyUp={this.handleAutofill}></input>
-                <button type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}><i className="fa fa-search"></i></button>
+                <button className="searchButton" type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}><i className="fa fa-search"></i></button>
               </div>
             </form>
             <ul className="dropdownSearch">
@@ -348,11 +431,9 @@ class App extends Component {
               }
             </ul>
           </div>
-          <div className="stockPortfolio">
-            <ul>
+          <ul className="userPortfolio">
               
-            </ul>
-          </div>
+          </ul>
         </nav>
         
 
@@ -361,60 +442,57 @@ class App extends Component {
         <main>
           <div className='banner'>
             <ul className="activeList">
-              <li className="activeContainer">
+              <li className="activeContainer a1">
                 <h4>{this.state.activeCompanyOne["ticker"]}</h4>
                 <p>{this.state.activeCompanyOne["price"]} (<span style={{ color: this.state.activeCompanyOne["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyOne["changes"]}</span>)</p>
               </li>
-              <li className="activeContainer">
+              <li className="activeContainer a2">
                 <h4>{this.state.activeCompanyTwo["ticker"]}</h4>
                 <p>{this.state.activeCompanyTwo["price"]} (<span style={{ color: this.state.activeCompanyTwo["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyTwo["changes"]}</span>)</p>
               </li>
 
-              <li className="activeContainer">
+              <li className="activeContainer a3">
                 <h4>{this.state.activeCompanyThree["ticker"]}</h4>
                 <p>{this.state.activeCompanyThree["price"]} (<span style={{ color: this.state.activeCompanyThree["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyThree["changes"]}</span>)</p>
               </li>
-              <li className="activeContainer">
+              <li className="activeContainer a4">
                 <h4>{this.state.activeCompanyFour["ticker"]}</h4>
                 <p>{this.state.activeCompanyFour["price"]} (<span style={{ color: this.state.activeCompanyFour["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyFour["changes"]}</span>)</p>
               </li>
 
-              <li className="activeContainer">
+              <li className="activeContainer a5">
                 <h4>{this.state.activeCompanyFive["ticker"]}</h4>
                 <p>{this.state.activeCompanyFive["price"]} (<span style={{ color: this.state.activeCompanyFive["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyFive["changes"]}</span>)</p>
               </li>
-              <li className="activeContainer">
+              <li className="activeContainer a6">
                 <h4>{this.state.activeCompanySix["ticker"]}</h4>
                 <p>{this.state.activeCompanySix["price"]} (<span style={{ color: this.state.activeCompanySix["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanySix["changes"]}</span>)</p>
               </li>
 
-              <li className="activeContainer">
+              <li className="activeContainer a7">
                 <h4>{this.state.activeCompanySeven["ticker"]}</h4>
                 <p>{this.state.activeCompanySeven["price"]} (<span style={{ color: this.state.activeCompanySeven["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanySeven["changes"]}</span>)</p>
               </li>
-              <li className="activeContainer">
+              <li className="activeContainer a8">
                 <h4>{this.state.activeCompanyEight["ticker"]}</h4>
                 <p>{this.state.activeCompanyEight["price"]} (<span style={{ color: this.state.activeCompanyEight["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyEight["changes"]}</span>)</p>
               </li>
-              <li className="activeContainer">
+              <li className="activeContainer a9">
                 <h4>{this.state.activeCompanyNine["ticker"]}</h4>
                 <p>{this.state.activeCompanyNine["price"]} (<span style={{ color: this.state.activeCompanyNine["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyNine["changes"]}</span>)</p>
               </li>
-              <li className="activeContainer">
-                <h4>{this.state.activeCompanyNine["ticker"]}</h4>
-                <p>{this.state.activeCompanyNine["price"]} (<span style={{ color: this.state.activeCompanyNine["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyNine["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer">
+              <li className="activeContainer a10">
                 <h4>{this.state.activeCompanyTen["ticker"]}</h4>
                 <p>{this.state.activeCompanyTen["price"]} (<span style={{ color: this.state.activeCompanyTen["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyTen["changes"]}</span>)</p>
               </li>
+
             </ul>
 
           </div>
 
 
           <div className="wrapper chartNumbersInfo">
-            <h2>{this.state.companyTitle} (<span style={{ color: this.state.mainPercentChange > 0 ? 'green' : 'red'}}>{this.state.mainPercentChange}%</span>) </h2>
+            <h2>{this.state.companyTitle} (<span style={{ color: this.state.mainPercentChange > 0 ? 'green' : 'red' }}>{this.state.mainPercentChange}%</span>) <button type="submit" onClick={handleAddPortfolio}><i className="fa fa-star"></i></button></h2>
 
             <div className="numbersGraph">
               <div className="companyNumbers">
@@ -431,24 +509,37 @@ class App extends Component {
               <div className="stockChart">
                 <Line
                   data={this.state.chartData}
-                  width={800}
-                  height={500}
+                  width={500}
+                  height={400}
                   options={{ responsive: true,}}
                 />
               </div>
             </div>
           </div>
 
-          <div className="aboutCompany">
-            <h4>Company CEO: {this.state.ceo}</h4>
-            <h4>Company URL: <a href={this.state.companyWebsite}>{this.state.companyWebsite}</a></h4>
-            <h4>Exchange: {this.state.exchange}</h4>
-            <h4>Industry: {this.state.industry}</h4>
-            <h4>Sector: {this.state.sector}</h4>
-            <h4>About {this.state.companyTitle}:</h4>
-            <p>{this.state.companyDescription}</p>
+          <div className="aboutNews wrapper">
+          	<div className="aboutCompany">
+          	  <h4>Company CEO: {this.state.ceo}</h4>
+          	  <h4>Company URL: <a href={this.state.companyWebsite}>{this.state.companyWebsite}</a></h4>
+          	  <h4>Exchange: {this.state.exchange}</h4>
+          	  <h4>Industry: {this.state.industry}</h4>
+          	  <h4>Sector: {this.state.sector}</h4>
+          	  <h4>About {this.state.companyTitle}:</h4>
+          	  <p>{this.state.companyDescription}</p>
+          	</div>
 
-
+            <ul className="news">
+              {
+                this.state.topNews.map((value, index) => {
+                  return <li key={index}>
+                    <h3> <a href={value['news_url']}>{value["title"]}</a></h3>
+                    <div className="newsImage"> <img src={value['image_url']}></img> </div>
+                    <p>{value["text"]}</p>
+                  
+                  </li>
+                })
+              }
+            </ul>
           </div>
 
         </main>

@@ -29,16 +29,21 @@ ul{
   margin: 0;
 }
 
-
-
 .App {
   /* text-align: center; */
-  display: flex;
+    display: flex;
+  
 }
 
 .wrapper{
   width: 90%;
   margin: 0 auto;
+  max-width: 1440px;
+}
+.fullWrapper{
+  width: 100%;
+  margin: 0 auto;
+
 }
 
 .title{
@@ -47,7 +52,7 @@ ul{
 
   h1{
     width: 100%;
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: $secondaryFont;
     margin: 0;
     line-height: 80%;
@@ -63,43 +68,77 @@ main{
 
 @keyframes activeList{
   0% {
-    transform: translateX(0)
+    transform: translateX(0);
+    -webkit-transform:translateX(0);
   }
   100% {
-    transform: translateX(-100%)
+    transform: translateX(90vw);
+    -webkit-transform:translateX(90vw);
   }
 }
 
 .banner{
+  overflow: hidden;
   height: 80px;
-  width: 100%;
   background: black;
   border-bottom: 2px solid $borderColor;
   display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  position: relative;
 
   .activeList{
-    width: 100%;
     height: 100%;;
     display: flex;
-    justify-content: space-around;
-
-  }
-
-  .activeListOne{
-    // animation-iteration-count: infinite;
-    // animation-timing-function: linear;
-    // animation-name: activeList;
-    // animation-duration: 10s;
+    justify-content: space-evenly;
+    position: relative;
+    
+    .activeContainer{
+      border: 1px solid $borderColor;
+      width: 100px;
+      padding: 10px;
+      position: absolute;
+      right: 100%;
+      animation-name: activeList;
+      animation-duration: 10s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    .a1{
+      animation-delay: 1s;
+    }
+    .a2{
+      animation-delay: 2s;
+    }
+    .a3{
+      animation-delay: 3s;
+    }
+    .a4{
+      animation-delay: 4s;
+    }
+    .a5{
+      animation-delay: 5s;
+    }
+    .a6{
+      animation-delay: 6s;
+    }
+    .a7{
+      animation-delay: 7s;
+    }
+    .a8{
+      animation-delay: 8s;
+    }
+    .a9{
+      animation-delay: 9s;
+    }
+    .a10{
+      animation-delay: 10s;
+    }
+    // .a11{
+    //   animation-delay: 11s;
+    // }
   }
 
 
   li{
-    border: 1px solid $borderColor;
-    padding: 10px;
 
   }
   h4{
@@ -118,8 +157,10 @@ main{
 
 nav{
   width: 35%;
-  height: 100vh;
+  // height: 100vh;
   border-right: 1px solid $borderColor;
+  background: #101010;
+  z-index: 100;
 }
 nav .wrapper{
     display: flex;
@@ -151,14 +192,14 @@ form{
 
 input {
   width: 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-family: $primaryFont;
   height: 50px;
   padding: 0;
   border: 0;
   
   transition: 1s;
-  transition-delay: 1s;
+  transition-delay: 2s;
 }
 
 form:hover input {
@@ -167,7 +208,7 @@ form:hover input {
   transition: 0.8s;
 }
 
-button {
+.searchButton {
   width: 100%;
   height: 50px;
   background-color: #333;
@@ -181,7 +222,7 @@ button {
   align-items: center;
   
   transition: 1s;
-  transition-delay: 1s;
+  transition-delay: 2s;
   
   .fa{
     font-size: 1rem;
@@ -214,7 +255,7 @@ form:hover button{
 
   h2{
     width: 90%;
-    font-size: 3rem;
+    font-size: 2rem;
     margin: 0;
     padding: 3% 0 1% 0;
     border-bottom: 1px solid $borderColor;
@@ -232,12 +273,12 @@ form:hover button{
 .companyNumbers{
   display: flex;
   justify-content: space-between;
-  width: 35%;
-  font-size: 1.4rem;
+  width: 40%;
+  font-size: 1rem;
 }
 
 .stockInformation{
-  line-height: 35px;
+  line-height: 25px;
   width: 100%;
   li{
       width: 100%;
@@ -245,6 +286,32 @@ form:hover button{
       display: flex;
       justify-content: space-between;
       border-bottom: 1px $borderColor dotted;
+  }
+}
+
+.aboutNews{
+  display: flex;
+  justify-content: space-between;
+  font-family: Helvetica, sans-serif;
+  h4{
+    margin: 1%;
+  }
+
+
+  .aboutCompany{
+    width: 40%;
+  }
+  .news{
+    width: 50%;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+
+
+
   }
 }
 
