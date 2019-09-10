@@ -23,6 +23,14 @@ html{
   font-family: $primaryFont;
 }
 
+a{
+  color: whitesmoke;
+}
+
+a:hover{
+  color: lightgray;
+}
+
 ul{
   list-style-type: none;
   padding: 0;
@@ -31,8 +39,10 @@ ul{
 
 .App {
   /* text-align: center; */
-    display: flex;
-  
+}
+
+.mainContentWrapper{
+  display: flex;
 }
 
 .wrapper{
@@ -72,8 +82,8 @@ main{
     -webkit-transform:translateX(0);
   }
   100% {
-    transform: translateX(90vw);
-    -webkit-transform:translateX(90vw);
+    transform: translateX(110vw);
+    -webkit-transform:translateX(110vw);
   }
 }
 
@@ -138,9 +148,6 @@ main{
   }
 
 
-  li{
-
-  }
   h4{
     margin: 0;
   }
@@ -156,7 +163,7 @@ main{
 
 
 nav{
-  width: 35%;
+  width: 30%;
   // height: 100vh;
   border-right: 1px solid $borderColor;
   background: #101010;
@@ -293,30 +300,153 @@ form:hover button{
   display: flex;
   justify-content: space-between;
   font-family: Helvetica, sans-serif;
-  h4{
-    margin: 1%;
-  }
 
 
   .aboutCompany{
     width: 40%;
+
+    h4{
+      margin: 0 0 5% 0;
+      border-bottom: 1px solid $borderColor;
+    }
+    .companyParagraph{
+      margin-top: 7%;
+    }
+
+    h5{
+      margin: 1% 0;
+      line-height: 30px;
+
+    }
   }
   .news{
-    width: 40%;
-    margin-right: 5%;
+    margin-bottom: 10%;
+    border: 1px solid $borderColor;
+    padding: 0 5%;
+    width: 50%;
+    height: 500px;
+    overflow-x: hidden; 
+    overflow-x: auto; 
+    text-align:justify; 
+    // margin-right: 2%;
 
     img {
       display: block;
       width: 100%;
     }
 
+  }
+}
 
-
-
+footer {
+  background: rgb(44, 44, 44);
+  text-align: center;
+  padding: .8%;
+  p {
+      margin: 0;
+      color: white;
   }
 }
 
 
+
+
+@media (max-width: 1190px){
+
+  .banner{
+    border: none;
+    border-bottom: 1px solid $borderColor;
+
+    .activeList{
+    height: 100%;;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 0.8rem;
+
+      .activeContainer{
+        border: none;
+      }
+    }
+  }
+
+
+
+
+  .mainContentWrapper{
+    display: inline;
+
+  }
+  .title{
+    border: none;
+    padding: 3%;
+  }
+
+  .searchAutofill{
+    margin: 0;
+  }
+  nav{
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid $borderColor;
+  }
+  .dropdownSearch{
+    top: 50px;
+  }
+}
+
+
+@media (max-width: 900px){
+
+  .numbersGraph{
+    flex-direction: column;
+    align-items: center;
+
+    .companyNumbers{
+      width:80%;
+    }
+  }
+}
+
+@media (max-width: 500px){
+  .chartjs-render-monitor{
+    height: 255px;
+    width: 319px;
+  }
+
+  .aboutNews{
+    flex-direction: column;
+    .aboutCompany{
+      width: 100%;
+    }
+    h4{
+      margin: 0 20%;
+    }
+    h5{
+      margin: 0 20%;
+    }
+    .news{
+      width: 100%;
+    }
+  }
+
+  .banner{
+    .activeList{
+      .a10{
+        display: none;
+      }
+      .a9{
+        display: none;
+      }
+      .a9{
+        display: none;
+      }
+    }
+  }
+
+
+
+}
 
 
 

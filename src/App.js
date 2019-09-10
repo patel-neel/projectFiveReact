@@ -55,6 +55,8 @@ class App extends Component {
             data: [],
             backgroundColor: '#737373',
             borderColor: 'rgba(136,136,136,0.5)',
+            pointRadius: 1,
+            
           }
         ],
       }
@@ -410,140 +412,146 @@ class App extends Component {
 
     return (
       <div className="App">
-        <nav>
-          <div className="title">
-            <h1>Juno</h1>
-            <h1>Finance</h1>
-          </div>
-
-          <div className="searchAutofill">
-            <form autoComplete="off" action="">
-              <div className="searchBar">
-                <input type="text" name="userInput" onSubmit={this.handleSubmit} value={this.state.userInput} onChange={this.handleChange} onKeyUp={this.handleAutofill}></input>
-                <button className="searchButton" type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}><i className="fa fa-search"></i></button>
-              </div>
-            </form>
-            <ul className="dropdownSearch">
-              {
-                this.state.autoFill.map((value, index) => {
-                  return <li key={index} onClick={() => this.handleFillTextbox(index)} onSubmit={this.handleSubmit}> {value["1. symbol"]} - {value["2. name"]}</li>
-                })
-              }
-            </ul>
-          </div>
-          <ul className="userPortfolio">
-              
-          </ul>
-        </nav>
-        
-
-
-
-        <main>
-          <div className='banner'>
-            <ul className="activeList">
-              <li className="activeContainer a1">
-                <h4>{this.state.activeCompanyOne["ticker"]}</h4>
-                <p>{this.state.activeCompanyOne["price"]} (<span style={{ color: this.state.activeCompanyOne["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyOne["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer a2">
-                <h4>{this.state.activeCompanyTwo["ticker"]}</h4>
-                <p>{this.state.activeCompanyTwo["price"]} (<span style={{ color: this.state.activeCompanyTwo["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyTwo["changes"]}</span>)</p>
-              </li>
-
-              <li className="activeContainer a3">
-                <h4>{this.state.activeCompanyThree["ticker"]}</h4>
-                <p>{this.state.activeCompanyThree["price"]} (<span style={{ color: this.state.activeCompanyThree["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyThree["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer a4">
-                <h4>{this.state.activeCompanyFour["ticker"]}</h4>
-                <p>{this.state.activeCompanyFour["price"]} (<span style={{ color: this.state.activeCompanyFour["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyFour["changes"]}</span>)</p>
-              </li>
-
-              <li className="activeContainer a5">
-                <h4>{this.state.activeCompanyFive["ticker"]}</h4>
-                <p>{this.state.activeCompanyFive["price"]} (<span style={{ color: this.state.activeCompanyFive["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyFive["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer a6">
-                <h4>{this.state.activeCompanySix["ticker"]}</h4>
-                <p>{this.state.activeCompanySix["price"]} (<span style={{ color: this.state.activeCompanySix["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanySix["changes"]}</span>)</p>
-              </li>
-
-              <li className="activeContainer a7">
-                <h4>{this.state.activeCompanySeven["ticker"]}</h4>
-                <p>{this.state.activeCompanySeven["price"]} (<span style={{ color: this.state.activeCompanySeven["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanySeven["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer a8">
-                <h4>{this.state.activeCompanyEight["ticker"]}</h4>
-                <p>{this.state.activeCompanyEight["price"]} (<span style={{ color: this.state.activeCompanyEight["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyEight["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer a9">
-                <h4>{this.state.activeCompanyNine["ticker"]}</h4>
-                <p>{this.state.activeCompanyNine["price"]} (<span style={{ color: this.state.activeCompanyNine["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyNine["changes"]}</span>)</p>
-              </li>
-              <li className="activeContainer a10">
-                <h4>{this.state.activeCompanyTen["ticker"]}</h4>
-                <p>{this.state.activeCompanyTen["price"]} (<span style={{ color: this.state.activeCompanyTen["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyTen["changes"]}</span>)</p>
-              </li>
-
-            </ul>
-
-          </div>
-
-
-          <div className="wrapper chartNumbersInfo">
-            <h2>{this.state.companyTitle} (<span style={{ color: this.state.mainPercentChange > 0 ? 'green' : 'red' }}>{this.state.mainPercentChange}%</span>) <button type="submit" onClick={handleAddPortfolio}><i className="fa fa-star"></i></button></h2>
-
-            <div className="numbersGraph">
-              <div className="companyNumbers">
+        <div className="mainContentWrapper">
+          <nav>
+            <div className="title">
+              <h1>Juno</h1>
+              <h1>Finance</h1>
+            </div>
+  
+            <div className="searchAutofill">
+              <form autoComplete="off" action="">
+                <div className="searchBar">
+                  <input type="text" name="userInput" onSubmit={this.handleSubmit} value={this.state.userInput} onChange={this.handleChange} onKeyUp={this.handleAutofill}></input>
+                  <button className="searchButton" type="submit" value="submit" onSubmit={this.handleSubmit} onClick={this.handleSubmit}><i className="fa fa-search"></i></button>
+                </div>
+              </form>
+              <ul className="dropdownSearch">
+                {
+                  this.state.autoFill.map((value, index) => {
+                    return <li key={index} onClick={() => this.handleFillTextbox(index)} onSubmit={this.handleSubmit}> {value["1. symbol"]} - {value["2. name"]}</li>
+                  })
+                }
+              </ul>
+            </div>
+            <ul className="userPortfolio">
                 
-                <ul className="stockInformation">
-                  {
-                    this.state.stockQuote.map((value, index) => {
-                      return <li key={index}><span>{value[0]}</span> <span>{value[1]}</span></li>
-                      
-                    })
-                  }
-                </ul>
-              </div>
-              <div className="stockChart">
-                <Line
-                  data={this.state.chartData}
-                  width={500}
-                  height={400}
-                  options={{ responsive: true,}}
-                />
+            </ul>
+          </nav>
+          
+  
+  
+  
+          <main>
+            <div className='banner'>
+              <ul className="activeList">
+                <li className="activeContainer a1">
+                  <h4>{this.state.activeCompanyOne["ticker"]}</h4>
+                  <p>{this.state.activeCompanyOne["price"]} (<span style={{ color: this.state.activeCompanyOne["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyOne["changes"]}</span>)</p>
+                </li>
+                <li className="activeContainer a2">
+                  <h4>{this.state.activeCompanyTwo["ticker"]}</h4>
+                  <p>{this.state.activeCompanyTwo["price"]} (<span style={{ color: this.state.activeCompanyTwo["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyTwo["changes"]}</span>)</p>
+                </li>
+  
+                <li className="activeContainer a3">
+                  <h4>{this.state.activeCompanyThree["ticker"]}</h4>
+                  <p>{this.state.activeCompanyThree["price"]} (<span style={{ color: this.state.activeCompanyThree["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyThree["changes"]}</span>)</p>
+                </li>
+                <li className="activeContainer a4">
+                  <h4>{this.state.activeCompanyFour["ticker"]}</h4>
+                  <p>{this.state.activeCompanyFour["price"]} (<span style={{ color: this.state.activeCompanyFour["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyFour["changes"]}</span>)</p>
+                </li>
+  
+                <li className="activeContainer a5">
+                  <h4>{this.state.activeCompanyFive["ticker"]}</h4>
+                  <p>{this.state.activeCompanyFive["price"]} (<span style={{ color: this.state.activeCompanyFive["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyFive["changes"]}</span>)</p>
+                </li>
+                <li className="activeContainer a6">
+                  <h4>{this.state.activeCompanySix["ticker"]}</h4>
+                  <p>{this.state.activeCompanySix["price"]} (<span style={{ color: this.state.activeCompanySix["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanySix["changes"]}</span>)</p>
+                </li>
+  
+                <li className="activeContainer a7">
+                  <h4>{this.state.activeCompanySeven["ticker"]}</h4>
+                  <p>{this.state.activeCompanySeven["price"]} (<span style={{ color: this.state.activeCompanySeven["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanySeven["changes"]}</span>)</p>
+                </li>
+                <li className="activeContainer a8">
+                  <h4>{this.state.activeCompanyEight["ticker"]}</h4>
+                  <p>{this.state.activeCompanyEight["price"]} (<span style={{ color: this.state.activeCompanyEight["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyEight["changes"]}</span>)</p>
+                </li>
+                <li className="activeContainer a9">
+                  <h4>{this.state.activeCompanyNine["ticker"]}</h4>
+                  <p>{this.state.activeCompanyNine["price"]} (<span style={{ color: this.state.activeCompanyNine["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyNine["changes"]}</span>)</p>
+                </li>
+                <li className="activeContainer a10">
+                  <h4>{this.state.activeCompanyTen["ticker"]}</h4>
+                  <p>{this.state.activeCompanyTen["price"]} (<span style={{ color: this.state.activeCompanyTen["changes"] > 0 ? 'green' : 'red' }}>{this.state.activeCompanyTen["changes"]}</span>)</p>
+                </li>
+  
+              </ul>
+  
+            </div>
+  
+  
+            <div className="wrapper chartNumbersInfo">
+              <h2>{this.state.companyTitle} (<span style={{ color: this.state.mainPercentChange > 0 ? 'green' : 'red' }}>{this.state.mainPercentChange}%</span>) </h2>
+  
+              <div className="numbersGraph">
+                <div className="companyNumbers">
+                  
+                  <ul className="stockInformation">
+                    {
+                      this.state.stockQuote.map((value, index) => {
+                        return <li key={index}><span>{value[0]}</span> <span>{value[1]}</span></li>
+                        
+                      })
+                    }
+                  </ul>
+                </div>
+                <div className="stockChart">
+                  <Line
+                    data={this.state.chartData}
+                    width={500}
+                    height={400}
+                    options={{maintainAspectRatio : false}}
+                    />
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="aboutNews wrapper">
-          	<div className="aboutCompany">
-          	  <h4>Company CEO: {this.state.ceo}</h4>
-          	  <h4>Company URL: <a href={this.state.companyWebsite}>{this.state.companyWebsite}</a></h4>
-          	  <h4>Exchange: {this.state.exchange}</h4>
-          	  <h4>Industry: {this.state.industry}</h4>
-          	  <h4>Sector: {this.state.sector}</h4>
-          	  <h4>About {this.state.companyTitle}:</h4>
-          	  <p>{this.state.companyDescription}</p>
-          	</div>
-
-            <ul className="news">
-              {
-                this.state.topNews.map((value, index) => {
-                  return <li key={index}>
-                    <h3> <a href={value['news_url']}>{value["title"]}</a></h3>
-                    <div className="newsImage"> <img src={value['image_url']}></img> </div>
-                    <p>{value["text"]}</p>
-                  
-                  </li>
-                })
-              }
-            </ul>
-          </div>
-
-        </main>
-
+  
+            <div className="aboutNews wrapper">
+              <div className="aboutCompany">
+                  <h4>{this.state.companyTitle} Key Info</h4>
+                  <h5>Company CEO: {this.state.ceo}</h5>
+                  <h5>Company URL: <a href={this.state.companyWebsite}>{this.state.companyWebsite}</a></h5>
+                  <h5>Exchange: {this.state.exchange}</h5>
+                  <h5>Industry: {this.state.industry}</h5>
+                  <h5>Sector: {this.state.sector}</h5>
+  
+                  <h4 className="companyParagraph">About {this.state.companyTitle}</h4>
+                  <p>{this.state.companyDescription}</p>
+              </div>
+  
+              <ul className="news">
+                {
+                  this.state.topNews.map((value, index) => {
+                    return <li key={index}>
+                      <h3> <a href={value['news_url']}>{value["title"]}</a></h3>
+                      <div className="newsImage"> <img src={value['image_url']}></img> </div>
+                      <p>{value["text"]}</p>
+                    
+                    </li>
+                  })
+                }
+              </ul>
+            </div>
+  
+          </main>
+        </div>
+        <footer>
+          <p>Copyright © Neel Patel 2019</p>
+        </footer>
       </div>
     );
   }
