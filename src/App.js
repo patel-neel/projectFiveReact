@@ -3,7 +3,6 @@ import axios from 'axios';
 // import Banner from './Banner';
 import { Line } from 'react-chartjs-2';
 import './App.scss';
-import { thisExpression } from '@babel/types';
 
 
 
@@ -72,7 +71,6 @@ class App extends Component {
     }).then(res => {
       res = res.data["data"]
 
-      console.log(res);
 
       this.setState({
         topNews: res
@@ -141,7 +139,6 @@ class App extends Component {
 
       }).then(result => {
         result = result.data["Time Series (5min)"];
-        console.log(result);
         let datesArray = [];
         let pricesArray = [];
 
@@ -266,7 +263,6 @@ class App extends Component {
           userInput: "",
           companyTicker: justTheTicker,
         })
-        console.log(Object.entries(res))
 
 
         axios({
@@ -283,7 +279,7 @@ class App extends Component {
 
         }).then(result => {
           result = result.data["Time Series (5min)"];
-          console.log(result);
+
           let datesArray = [];
           let pricesArray = [];
 
@@ -292,8 +288,6 @@ class App extends Component {
             pricesArray.push(result[i]["4. close"])
           }
 
-          console.log(pricesArray);
-          console.log(datesArray);
 
           let arrayDataSets = [{
             label: '',
@@ -344,11 +338,6 @@ class App extends Component {
 
           })
 
-          console.log(companySymbol);
-          // console.log(result["description"]);
-
-          console.log(percentString)
-          console.log(symbol)
         })
       })
 
@@ -360,55 +349,8 @@ class App extends Component {
 
 
 
-
-
-  // handleAddPortfolio(event){
-  //   event.preventDefault();
-    
-  //   alert(this.state.ceo)
-
-
-    // axios({
-    //   method: 'GET',
-    //   url: `https://financialmodelingprep.com/api/v3/company/profile/${symbol}`,
-    //   dataResponse: 'json',
-    // }).then(res=>{
-    //   res=res.data
-
-    //   console.log(res)
-
-    // })
-    
-  // }
-
-
   render() {
 
-    let handleAddPortfolio=(event)=>{
-      event.preventDefault();
-
-      let companySymbol = this.state.companyTicker
-
-      axios({
-        method: 'GET',
-        url: `https://financialmodelingprep.com/api/v3/company/profile/${companySymbol}`,
-        dataResponse: 'json',
-      }).then(res=>{
-        res=res.data["profile"]
-
-        let portfolioObject = res
-
-        this.setState({
-          userPortfolio: [portfolioObject],
-        })
-
-
-        console.log(portfolioObject)
-
-      })
-
-      
-    }
 
     return (
       <div className="App">
