@@ -24,6 +24,11 @@ html{
 
 }
 
+.particles canvas{
+  position: absolute;
+  height: 100%;
+}
+
 a{
   color: whitesmoke;
 }
